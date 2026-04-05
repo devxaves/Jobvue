@@ -1,0 +1,576 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   JOBVUE DESIGN SYSTEM — Theme Tokens
+   ============================================================ */
+
+@theme {
+  /* Brand Colors */
+  --color-brand-blue-dark: #1E3A8A;
+  --color-brand-blue-bright: #2563EB;
+  --color-brand-purple: #7C3AED;
+  --color-brand-green: #10B981;
+  --color-brand-bg: #F0F4FF;
+  --color-brand-surface: #FFFFFF;
+  --color-brand-text: #0F172A;
+  --color-brand-text-secondary: #475569;
+  --color-brand-error: #EF4444;
+  --color-brand-warning: #F59E0B;
+  --color-brand-success: #10B981;
+  --color-brand-border: #DBEAFE;
+
+  /* Legacy InterVue tokens (preserved for existing components) */
+  --color-success-100: #4FC3F7;
+  --color-success-200: #0288D1;
+  --color-destructive-100: #EF9A9A;
+  --color-destructive-200: #C62828;
+  --color-primary-100: #DBEAFE;
+  --color-primary-200: #2563EB;
+  --color-light-100: #FFFFFF;
+  --color-light-400: #F0F4FF;
+  --color-light-600: #DBEAFE;
+  --color-light-800: #1E3A8A;
+  --color-dark-100: #1E3A8A;
+  --color-dark-200: #1E40AF;
+  --color-dark-300: #0F172A;
+
+  --font-mona-sans: "Mona Sans", sans-serif;
+  --font-sora: "Sora", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-space: "Space Grotesk", sans-serif;
+
+  --bg-pattern: url("/pattern.png");
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: #F0F4FF;
+  --foreground: #0F172A;
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F172A;
+  --primary: #2563EB;
+  --primary-foreground: #FFFFFF;
+  --secondary: #DBEAFE;
+  --secondary-foreground: #1E3A8A;
+  --muted: #F0F4FF;
+  --muted-foreground: #475569;
+  --accent: #7C3AED;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --border: #DBEAFE;
+  --input: #DBEAFE;
+  --ring: #2563EB;
+  --chart-1: #2563EB;
+  --chart-2: #7C3AED;
+  --chart-3: #10B981;
+  --chart-4: #F59E0B;
+  --chart-5: #1E3A8A;
+  --sidebar: #F0F4FF;
+  --sidebar-foreground: #1E3A8A;
+  --sidebar-primary: #2563EB;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #7C3AED;
+  --sidebar-accent-foreground: #1E3A8A;
+  --sidebar-border: #DBEAFE;
+  --sidebar-ring: #2563EB;
+}
+
+.dark {
+  --background: #0F172A;
+  --foreground: #F0F4FF;
+  --card: #1E293B;
+  --card-foreground: #F0F4FF;
+  --popover: #1E293B;
+  --popover-foreground: #F0F4FF;
+  --primary: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1E3A8A;
+  --secondary-foreground: #F0F4FF;
+  --muted: #1E293B;
+  --muted-foreground: #94A3B8;
+  --accent: #7C3AED;
+  --accent-foreground: #F0F4FF;
+  --destructive: #EF4444;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #3B82F6;
+  --chart-1: #3B82F6;
+  --chart-2: #8B5CF6;
+  --chart-3: #34D399;
+  --chart-4: #FBBF24;
+  --chart-5: #1E3A8A;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-inter), "Inter", system-ui, sans-serif;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-sora), "Sora", system-ui, sans-serif;
+    @apply text-brand-text font-bold;
+  }
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
+  h2 { @apply text-3xl font-semibold; }
+  h3 { @apply text-2xl font-semibold; }
+  p, li {
+    @apply text-brand-text-secondary;
+  }
+  ul {
+    @apply list-disc list-inside;
+  }
+}
+
+/* ============================================================
+   CLAYMORPHISM COMPONENTS
+   ============================================================ */
+
+@layer components {
+
+  /* === Clay Card === */
+  .clay-card {
+    @apply bg-white rounded-[20px] border-2 border-brand-blue-dark p-6;
+    box-shadow: 6px 6px 0px #1E3A8A;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .clay-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 8px 8px 0px #1E3A8A;
+  }
+
+  .clay-card-soft {
+    @apply bg-white rounded-[20px] border border-brand-border p-6;
+    box-shadow: 0 8px 32px rgba(37,99,235,0.10);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .clay-card-soft:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(37,99,235,0.15);
+  }
+
+  .clay-card-purple {
+    @apply bg-white rounded-[24px] border-2 border-brand-purple p-6;
+    box-shadow: 6px 6px 0px #7C3AED;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .clay-card-purple:hover {
+    transform: translateY(-4px);
+    box-shadow: 8px 8px 0px #7C3AED;
+  }
+
+  /* === Buttons === */
+  .btn-jobvue-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-brand-blue-bright text-white font-bold
+           rounded-2xl px-6 py-3
+           border-2 border-brand-blue-dark
+           cursor-pointer transition-all duration-200;
+    box-shadow: 4px 4px 0px #1E3A8A;
+  }
+  .btn-jobvue-primary:hover {
+    @apply bg-blue-700;
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px #1E3A8A;
+  }
+  .btn-jobvue-primary:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 2px 2px 0px #1E3A8A;
+  }
+
+  .btn-jobvue-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-white text-brand-blue-bright font-bold
+           rounded-2xl px-6 py-3
+           border-2 border-brand-blue-bright
+           cursor-pointer transition-all duration-200;
+    box-shadow: 4px 4px 0px #2563EB;
+  }
+  .btn-jobvue-secondary:hover {
+    @apply bg-blue-50;
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px #2563EB;
+  }
+  .btn-jobvue-secondary:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: 2px 2px 0px #2563EB;
+  }
+
+  .btn-jobvue-danger {
+    @apply inline-flex items-center justify-center gap-2
+           bg-red-500 text-white font-bold
+           rounded-2xl px-6 py-3
+           cursor-pointer transition-all duration-200;
+    box-shadow: 4px 4px 0px #991B1B;
+  }
+  .btn-jobvue-danger:hover {
+    @apply bg-red-600;
+    transform: translateY(-2px);
+  }
+
+  /* === Badges / Pills === */
+  .badge-pill {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold;
+    font-family: var(--font-space), "Space Grotesk", monospace;
+  }
+  .badge-freelance {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-purple-100 text-purple-700;
+    font-family: var(--font-space), "Space Grotesk", monospace;
+  }
+  .badge-parttime {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-700;
+    font-family: var(--font-space), "Space Grotesk", monospace;
+  }
+  .badge-gig {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-700;
+    font-family: var(--font-space), "Space Grotesk", monospace;
+  }
+  .badge-internship {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-amber-100 text-amber-700;
+    font-family: var(--font-space), "Space Grotesk", monospace;
+  }
+  .badge-volunteer {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-pink-100 text-pink-700;
+    font-family: var(--font-space), "Space Grotesk", monospace;
+  }
+  .badge-urgent {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-red-100 text-red-600;
+    font-family: var(--font-space), "Space Grotesk", monospace;
+  }
+
+  /* === Navbar === */
+  .navbar-glass {
+    @apply fixed top-0 left-0 right-0 z-50 px-4 py-3;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(219, 234, 254, 0.5);
+  }
+
+  /* === Legacy InterVue buttons (preserved) === */
+  .btn-call {
+    @apply inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-brand-green border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-green-600 hover:bg-green-600 min-w-28 cursor-pointer items-center justify-center overflow-visible;
+  }
+  .btn-disconnect {
+    @apply inline-block px-7 py-3 text-sm font-bold leading-5 text-white transition-colors duration-150 bg-brand-error border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-red-600 hover:bg-red-600 min-w-28;
+  }
+  .btn-upload {
+    @apply flex min-h-14 w-full items-center justify-center gap-1.5 rounded-md bg-primary text-white;
+  }
+  .btn-primary {
+    @apply w-fit !bg-brand-blue-bright !text-white hover:!bg-blue-700 !rounded-full !font-bold px-5 cursor-pointer min-h-10;
+  }
+  .btn-secondary {
+    @apply w-fit !bg-brand-blue-dark !text-blue-200 hover:!bg-blue-900 !rounded-full !font-bold px-5 cursor-pointer min-h-10;
+  }
+
+  /* === Card components (legacy, adapted) === */
+  .card-border {
+    @apply p-0.5 rounded-2xl w-fit;
+    background: linear-gradient(to bottom, #2563EB, rgba(37, 99, 235, 0.2));
+  }
+  .card {
+    @apply rounded-2xl min-h-full;
+    background: linear-gradient(to bottom, #F0F4FF, #FFFFFF);
+  }
+
+  /* === Forms === */
+  .form {
+    @apply w-full;
+    .label {
+      @apply !text-brand-text-secondary !font-medium;
+    }
+    .input {
+      @apply !bg-brand-bg !rounded-2xl !min-h-12 !px-5 placeholder:!text-brand-text-secondary !border !border-brand-border focus:!border-brand-blue-bright focus:!ring-2 focus:!ring-brand-blue-bright/20;
+    }
+    .btn {
+      @apply !w-full !bg-brand-blue-bright !text-white hover:!bg-blue-700 !rounded-2xl !min-h-12 !font-bold !px-5 cursor-pointer;
+      box-shadow: 4px 4px 0px #1E3A8A;
+    }
+  }
+
+  /* === Interview UI (legacy, adapted) === */
+  .call-view {
+    @apply flex sm:flex-row flex-col gap-10 items-center justify-between w-full;
+    h3 { @apply text-center text-brand-blue-bright mt-5; }
+    .card-interviewer {
+      @apply flex-center flex-col gap-2 p-7 h-[400px] rounded-[20px] border-2 border-brand-blue-dark flex-1 sm:basis-1/2 w-full;
+      background: linear-gradient(135deg, #2563EB, #1E3A8A);
+    }
+    .avatar {
+      @apply z-10 flex items-center justify-center rounded-full size-[120px] relative;
+      background: linear-gradient(135deg, #3B82F6, #2563EB);
+      .animate-speak {
+        @apply absolute inline-flex size-5/6 animate-ping rounded-full bg-brand-blue-bright opacity-75;
+      }
+    }
+    .card-border {
+      @apply p-0.5 rounded-2xl flex-1 sm:basis-1/2 w-full h-[400px] max-md:hidden;
+      background: linear-gradient(to bottom, #2563EB, rgba(37, 99, 235, 0.2));
+    }
+    .card-content {
+      @apply flex flex-col gap-2 justify-center items-center p-7 rounded-2xl min-h-full;
+      background: linear-gradient(135deg, #1E3A8A, #0F172A);
+    }
+  }
+
+  .transcript-border {
+    @apply p-0.5 rounded-2xl w-full;
+    background: linear-gradient(to bottom, #2563EB, rgba(37, 99, 235, 0.2));
+    .transcript {
+      @apply rounded-2xl min-h-12 px-5 py-3 flex items-center justify-center;
+      background: linear-gradient(135deg, #1E3A8A, #0F172A);
+      p { @apply text-lg text-center text-white; }
+    }
+  }
+
+  .section-feedback {
+    @apply flex flex-col gap-8 max-w-5xl mx-auto max-sm:px-4 text-lg leading-7;
+    .buttons {
+      @apply flex w-full justify-evenly gap-4 max-sm:flex-col max-sm:items-center;
+    }
+  }
+
+  .auth-layout {
+    @apply flex items-center justify-center mx-auto max-w-7xl min-h-screen max-sm:px-4 max-sm:py-8;
+  }
+
+  .root-layout {
+    @apply flex mx-auto max-w-7xl flex-col gap-12 my-12 px-16 max-sm:px-4 max-sm:my-8;
+    padding-top: 80px;
+  }
+
+  .card-cta {
+    @apply flex flex-row rounded-[24px] px-16 py-6 items-center justify-between max-sm:px-4;
+    background: linear-gradient(135deg, #2563EB, #1E3A8A);
+  }
+
+  .interviews-section {
+    @apply flex flex-wrap gap-4 max-lg:flex-col w-full items-stretch;
+  }
+
+  .interview-text {
+    @apply text-lg text-center text-white;
+  }
+
+  .progress {
+    @apply h-1.5 text-[5px] font-bold bg-brand-blue-bright rounded-full flex-center;
+  }
+
+  .tech-tooltip {
+    @apply absolute bottom-full mb-1 hidden group-hover:flex px-2 py-1 text-xs text-white bg-gray-700 rounded-md shadow-md;
+  }
+
+  .card-interview {
+    @apply rounded-[20px] min-h-full flex flex-col p-6 relative overflow-hidden gap-10 justify-between;
+    background: linear-gradient(135deg, #2563EB, #1E3A8A);
+    .badge-text {
+      @apply text-sm font-semibold capitalize;
+    }
+  }
+
+  /* === Skeleton Loader === */
+  .skeleton {
+    @apply rounded-[20px] bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50 bg-[length:200%_100%];
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  /* === Stats Counter Section === */
+  .stats-strip {
+    @apply bg-white rounded-[24px] border-2 border-brand-blue-dark p-6;
+    box-shadow: 6px 6px 0px #1E3A8A;
+  }
+
+  /* === Job Card === */
+  .job-card {
+    @apply bg-white rounded-[20px] border-2 border-brand-blue-dark p-5 cursor-pointer;
+    box-shadow: 5px 5px 0px #1E3A8A;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .job-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 7px 7px 0px #1E3A8A;
+  }
+
+  /* === Step Progress Indicator === */
+  .step-indicator {
+    @apply flex items-center gap-2;
+    .step-dot {
+      @apply w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300;
+    }
+    .step-dot.active {
+      @apply bg-brand-blue-bright text-white scale-110;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+    }
+    .step-dot.completed {
+      @apply bg-brand-green text-white;
+    }
+    .step-dot.pending {
+      @apply bg-gray-200 text-gray-500;
+    }
+    .step-line {
+      @apply flex-1 h-0.5 bg-gray-200 transition-all duration-300;
+    }
+    .step-line.completed {
+      @apply bg-brand-green;
+    }
+  }
+
+  /* === Filter Sidebar === */
+  .filter-sidebar {
+    @apply bg-white rounded-[20px] border border-brand-border p-6;
+    box-shadow: 0 8px 32px rgba(37,99,235,0.08);
+  }
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility pattern {
+  @apply bg-[url('/pattern.png')] bg-top bg-no-repeat;
+}
+
+@utility animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@utility animate-slideUp {
+  animation: slideUp 0.5s ease-out;
+}
+
+@utility animate-slideDown {
+  animation: slideDown 0.3s ease-out;
+}
+
+@utility animate-countUp {
+  animation: countUp 2s ease-out forwards;
+}
+
+@utility text-gradient-blue {
+  @apply bg-gradient-to-r from-brand-blue-bright to-brand-purple bg-clip-text text-transparent;
+}
+
+@utility text-gradient-purple {
+  @apply bg-gradient-to-r from-brand-purple to-pink-500 bg-clip-text text-transparent;
+}
+
+@utility blob-gradient {
+  background: radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 20%, rgba(124,58,237,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 80%, rgba(16,185,129,0.05) 0%, transparent 50%);
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+  50% { box-shadow: 0 0 20px 5px rgba(37, 99, 235, 0.2); }
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F0F4FF;
+}
+::-webkit-scrollbar-thumb {
+  background: #DBEAFE;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2563EB;
+}
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+
+::selection {
+  background: rgba(37, 99, 235, 0.2);
+  color: #1E3A8A;
+}
