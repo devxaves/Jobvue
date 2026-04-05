@@ -1,699 +1,430 @@
-# JobVue AI
+<div align="center">
 
-JobVue AI is a production-focused full-stack platform that combines:
+# 🚀 JobVue AI
 
-- **Hyperlocal job marketplace** (post, discover, apply, manage)
-- **AI interview preparation** (create mock interviews, practice, get feedback)
-- **Unified user profile** (skills, progress, badges, activity)
+## Your Complete Career Operating System
 
----
+**Find jobs. Practice interviews. Land offers.**
 
-## Highlights
-
-- Modern **Next.js 15 App Router** architecture
-- Hybrid data model:
-  - **PostgreSQL + Prisma** for users, interviews, feedback, gamification
-  - **MongoDB + Mongoose** for jobs, applications, saved jobs
-- JWT + cookie-based auth flow
-- Job search/filtering + application workflows
-- Intervue AI with interview history and feedback loop
-- Claymorphism-first UI design system
+A full-stack career platform blending a hyperlocal job marketplace with AI-powered interview prep and gamified progress tracking.
 
 ---
 
-## Tech Stack
+### ⚡ Tech Stack
 
-- **Frontend / Full-stack framework:** Next.js 15, React 19, TypeScript
-- **Styling:** Tailwind CSS, Framer Motion
-- **Validation / Forms:** Zod, React Hook Form
-- **ORM / DB clients:** Prisma, Mongoose
-- **Databases:** PostgreSQL, MongoDB
-- **AI:** Google Gemini + Vapi integrations
+![Next.js](https://img.shields.io/badge/Next.js_15-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript_5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma_5.22-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Gemini AI](https://img.shields.io/badge/Gemini_AI-EA4335?style=for-the-badge&logoColor=white)
+![Vapi](https://img.shields.io/badge/Vapi_Voice-18C5A9?style=for-the-badge&logoColor=white)
 
----
-
-## Project Structure
-
-- [app](app) — app routes, layouts, API route handlers
-- [components](components) — reusable UI and feature components
-- [lib](lib) — auth, DB clients, server actions, models
-- [prisma](prisma) — schema, migrations, seed scripts
-- [public](public) — static assets
+</div>
 
 ---
 
-## Quick Start
+## 🎯 Why JobVue AI?
 
-1. Install dependencies
+Students, freelancers, and early-career pros need **one place** to:
+
+✨ **Discover real local opportunities** → Browse, save, apply to jobs near you  
+🎙️ **Practice with AI interviews** → Get instant feedback from Gemini  
+🏆 **Track progress & earn badges** → Streaks, tokens, leaderboards
+
+Built as a **production-style app** with modern Next.js, typed server actions, and hybrid persistence (PostgreSQL + MongoDB) optimized for real-world workflows.
+
+---
+
+## 🧭 Core Product Areas
+
+### 💼 Job Marketplace
+
+Find and post opportunities in your network  
+✅ Browse jobs by role, skills, location  
+✅ Save favorites and track applications  
+✅ Manage postings (for employers)  
+✅ Apply directly in-app
+
+### 🎙️ Intervue AI (Interview Prep)
+
+Generate questions → Practice with voice AI → Get scored feedback  
+✅ Role-based question generation  
+✅ Live Vapi voice interview sessions  
+✅ Real-time transcript collection  
+✅ Structured AI scoring (5 categories)  
+✅ Auto-redirect to feedback page
+
+### 🏆 Profile & Gamification
+
+Track mastery, earn rewards, climb leaderboards  
+✅ Unified profile (skills, bio, preferences)  
+✅ Token system for milestones  
+✅ Streaks for consistency  
+✅ Unlockable badges  
+✅ Public leaderboards
+
+---
+
+## 🏗️ Architecture at a Glance
+
+```
+┌─────────────────────────────────────┐
+│   Frontend: Next.js 15 + React 19   │
+│   (TypeScript, Tailwind, Framer)    │
+└────────────────┬────────────────────┘
+                 │
+        ┌────────┴────────┐
+        │                 │
+   ┌────▼─────┐     ┌────▼─────┐
+   │PostgreSQL│     │ MongoDB  │
+   │(Prisma)  │     │(Mongoose)│
+   │ ─────────│     │ ─────────│
+   │ Users    │     │ Jobs     │
+   │ Feedback │     │ Apps     │
+   │ Badges   │     │ Saved    │
+   │ Tokens   │     │          │
+   └──────────┘     └────┬─────┘
+                         │
+        ┌────────┬───────┼────────┬──────┐
+        │        │       │        │      │
+   ┌────▼──┐ ┌──▼───┐ ┌─▼──────┐┌▼───┐┌─▼──┐
+   │Gemini │ │Vapi  │ │Firebase││Auth││JWT │
+   │(AI)   │ │Voice │ │(Legacy)││    ││    │
+   └───────┘ └──────┘ └────────┘└────┘└────┘
+```
+
+---
+
+## 📁 Project Structure
+
+```
+jobvue/
+├── app/                    🛣️  Next.js routes & API handlers
+│   ├── (interview)/        Interview pages & flows
+│   ├── (auth)/             Auth pages
+│   ├── jobs/               Job marketplace
+│   ├── profile/            User profiles
+│   ├── api/                REST endpoints
+│   └── layout.tsx          Root layout
+│
+├── components/             ⚛️  React components
+│   ├── Agent.tsx           Interview session component
+│   ├── FeedbackClient.tsx  Feedback display
+│   ├── Navbar.tsx          Navigation
+│   └── ui/                 Radix-based primitives
+│
+├── lib/                    🔧  Utilities & services
+│   ├── actions/            Server actions (Prisma, AI)
+│   ├── models/             Mongoose schemas
+│   ├── auth.ts             JWT + auth logic
+│   ├── prisma.ts           Prisma client
+│   └── vapi.sdk.ts         Vapi initialization
+│
+├── prisma/                 📊  Database
+│   ├── schema.prisma       PostgreSQL schema
+│   ├── seed.ts             Demo data seeder
+│   └── migrations/         Schema versions
+│
+├── constants/              ⚙️  Config & schemas
+│   └── index.ts            Zod schemas, mappings
+│
+└── public/                 📦  Static assets
+```
+
+---
+
+## 🌐 Key Routes & Features
+
+### 🎯 User-Facing Pages
+
+| Route                    | Feature              |
+| ------------------------ | -------------------- |
+| /                        | Home + hero          |
+| /jobs                    | Browse marketplace   |
+| /jobs/[id]               | Job details          |
+| /jobs/post               | Post new listing     |
+| /jobs/manage             | Manage your postings |
+| /profile                 | View/edit profile    |
+| /interview               | Interview history    |
+| /interview/[id]          | Run interview        |
+| /interview/[id]/feedback | View results         |
+| /quiz                    | Practice quizzes     |
+| /leaderboard             | Rankings             |
+
+### 🔌 API Endpoints
+
+```
+POST   /api/vapi/generate           Generate & start interview
+GET    /api/jobs                    List jobs
+POST   /api/jobs/[id]/apply         Submit application
+GET    /api/me                      Current user
+GET    /api/gamification/badges     User badges
+GET    /api/gamification/leaderboard Global rankings
+```
+
+---
+
+## 🚀 Get Started in 5 Minutes
+
+### 1️⃣ Clone & Install
 
 ```bash
+git clone https://github.com/your-org/jobvue.git
+cd jobvue
 npm install
 ```
 
-2. Configure environment variables in `.env` (DBs, JWT secret, AI keys)
+### 2️⃣ Configure .env
 
-3. Generate Prisma client
+Create a `.env` file in the root:
 
-```bash
-npm run prisma:generate
+```env
+# 🗄️  Databases
+DATABASE_URL=postgresql://user:pass@host/db
+DIRECT_URL=postgresql://user:pass@host/db
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/jobvue
+
+# 🔐 Security
+JWT_SECRET=your-super-secret-key-min-32-chars
+
+# 🤖 AI & Voice
+GEMINI_API_KEY=your-gemini-key
+NEXT_PUBLIC_GEMINI_API_KEY=your-gemini-key
+NEXT_PUBLIC_VAPI_WEB_TOKEN=your-vapi-token
+NEXT_PUBLIC_VAPI_WORKFLOW_ID=your-workflow-id
 ```
 
-4. Push schema
+> ⚠️ Never commit `.env` to version control. Use `.env.local` for local development.
+
+### 3️⃣ Initialize Database
 
 ```bash
-npm run prisma:push
+npm run prisma:generate    # Generate Prisma client
+npm run prisma:push        # Sync schema
+npm run seed               # Load demo data
 ```
 
-5. Seed demo data
-
-```bash
-npm run seed
-```
-
-6. Start dev server
+### 4️⃣ Start Development
 
 ```bash
 npm run dev
 ```
 
----
+Server runs at `http://localhost:3000` with Turbopack hot reload.
 
-## Demo Credentials
+### 5️⃣ Open & Login
 
-After seeding:
+Visit the app and use demo credentials:
 
-- `demo@jobvue.com` / `demo1234`
-- `poster@jobvue.com` / `poster1234`
-
----
-
-## NPM Scripts
-
-- `npm run dev` — start development server
-- `npm run build` — production build
-- `npm run start` — run production server
-- `npm run lint` — run lint checks
-- `npm run prisma:generate` — generate Prisma client
-- `npm run prisma:push` — sync Prisma schema
-- `npm run prisma:migrate` — run Prisma migrations
-- `npm run seed` — seed PostgreSQL + MongoDB demo data
+| Email             | Password   | Role            |
+| ----------------- | ---------- | --------------- |
+| demo@jobvue.com   | demo1234   | Seeker + Poster |
+| poster@jobvue.com | poster1234 | Poster          |
 
 ---
 
-## Deployment Notes
+## 📦 Available Commands
 
-- Ensure all production environment variables are configured.
-- Use strong `JWT_SECRET` and rotate secrets regularly.
-- Enable CI checks for linting, types, and smoke tests.
+```bash
+npm run dev              # Start dev server (Turbopack)
+npm run build            # Production build
+npm run start            # Run production server
+npm run lint             # ESLint checks
+npm run prisma:generate  # Regenerate Prisma client
+npm run prisma:push      # Push schema to DB
+npm run prisma:migrate   # Interactive migrations
+npm run seed             # Seed PostgreSQL + MongoDB
+```
 
 ---
 
-## Brand
+## 🎙️ Interview Flow (End-to-End)
 
-Project name: **JobVue AI**
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                    Interview Session Flow                          │
+└──────────────────────────────────────────────────────────────────┘
+
+1. User clicks "Call" → Vapi session starts
+   ├─ Questions loaded
+   ├─ Voice agent initialized
+   └─ Client listening for transcripts
+
+2. Live conversation
+   ├─ User speaks (captured by Vapi)
+   ├─ Agent responds
+   └─ Transcripts streamed to frontend
+
+3. User clicks "End" → Call terminates
+   ├─ All messages collected
+   └─ Sent to server action
+
+4. Server processes feedback
+   ├─ Gemini analyzes transcript
+   ├─ Generates structured scores (5 categories)
+   ├─ Saves to PostgreSQL
+   └─ Creates/awards badges (non-blocking)
+
+5. Auto-redirect → /interview/[id]/feedback
+   ├─ Client automatically navigated
+   └─ Feedback page displays scores & analysis
+```
+
+### Interview Scoring Categories
+
+| Category                | Focus                            |
+| ----------------------- | -------------------------------- |
+| 🗣️ Communication Skills | Clarity, articulation, structure |
+| 💡 Technical Knowledge  | Depth of understanding           |
+| 🧩 Problem Solving      | Analysis & solution design       |
+| 👥 Cultural Fit         | Values alignment & collaboration |
+| 💪 Confidence & Clarity | Assertiveness & decisiveness     |
+
+Each scores 0–100, with detailed comments and actionable improvement areas.
 
 ---
 
-<!-- Legacy autogenerated content retained below for reference.
+## 🛡️ Recent Fixes & Improvements
+
+✅ **Schema Validation** — Fixed AI output category naming to match strict Zod schema  
+✅ **Dependency Updates** — Upgraded @daily-co/daily-js and @vapi-ai/web  
+✅ **Badge System** — Made non-blocking with lazy badge creation  
+✅ **Auto-Redirect** — Interview completion now reliably routes to feedback page  
+✅ **Windows EPERM** — Resolved native module lock issues with clean install script
+
+---
+
+## ⚡ Performance & Reliability
+
+- **Server Actions** — Type-safe, compiled Prisma queries
+- **Streaming** — Next.js streaming for fast TTFB
+- **Error Boundaries** — Graceful fallbacks for badge/gamification failures
+- **Database Optimization** — Indexes on frequently queried fields (userId, interviewId)
+- **Native Modules** — Proper lightningcss and Prisma engine management
+
+---
+
+## 🔒 Security Checklist
+
+✅ Use strong, unique JWT_SECRET (min 32 chars)  
+✅ Rotate API keys every 90 days  
+✅ Never commit .env files  
+✅ Restrict DB users with least-privilege access  
+✅ Enable HTTPS in production  
+✅ Validate all user inputs with Zod
+
+---
+
+## 🐛 Troubleshooting
+
+### ❌ Native Module Errors (Windows EPERM)
+
+```bash
+# Kill node processes
+taskkill /F /IM node.exe
+
+# Clean & reinstall
+rm -r .next node_modules package-lock.json
+npm ci
+npm run build
+```
+
+### ❌ Feedback Not Generating
+
+1. Check Gemini API key in .env
+2. Verify PostgreSQL connectivity
+3. Confirm interview transcript collection
+4. Check server logs for Zod validation errors
+
+**Fix:** Category names must match exactly:
+
+- "Problem Solving" (not "Problem-Solving")
+- "Cultural Fit" (not "Cultural & Role Fit")
+- "Confidence and Clarity" (not "Confidence & Clarity")
+
+### ❌ Voice Call Not Connecting
+
+1. Verify NEXT_PUBLIC_VAPI_WEB_TOKEN
+2. Verify NEXT_PUBLIC_VAPI_WORKFLOW_ID
+3. Check Vapi dashboard for endpoint status
+4. Confirm browser microphone permissions
+
+### ❌ Database Connection Failed
+
+```bash
+# Verify PostgreSQL
+psql $DATABASE_URL -c "SELECT 1"
+
+# Verify MongoDB
+mongosh "$MONGODB_URI" --eval "db.adminCommand('ping')"
+
+# Reset Prisma
+npm run prisma:generate
+npm run prisma:push
+```
+
+---
+
+## 📊 Deployment Checklist
+
+Before shipping to production:
+
+- [ ] All environment variables configured
+- [ ] `prisma generate` succeeds in CI/CD pipeline
+- [ ] `npm run build` completes without errors
+- [ ] Database connectivity tested (PostgreSQL + MongoDB)
+- [ ] Gemini & Vapi API keys verified
+- [ ] JWT_SECRET is strong & unique
+- [ ] CORS properly configured
+- [ ] Rate limiting enabled on API routes
+- [ ] Monitoring & error tracking set up (Sentry, etc.)
+
+---
+
+## 🚀 Next Steps & Roadmap
+
+Future enhancements in progress:
+
+🔄 **Peer interviews** — Practice with real people  
+📈 **Interview analytics** — Trend tracking over time  
+🎯 **Personalized learning paths** — Adaptive question generation  
+🤝 **Mentorship matching** — Connect with industry professionals  
+📱 **Mobile app** — React Native companion
+
+---
+
+## 📄 License
+
+[MIT License](LICENSE) - Free to use, modify, and distribute.
+
+---
+
+## 🤝 Contributing
+
+We welcome PRs! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 💬 Support & Community
+
+- 📧 Email: support@jobvue.ai
+- 🐛 Report bugs: [GitHub Issues](https://github.com/your-org/jobvue/issues)
+- 💭 Discuss: [GitHub Discussions](https://github.com/your-org/jobvue/discussions)
+
+---
+
 <div align="center">
-  <br />
 
-  <div>
-    <img src="https://img.shields.io/badge/-Next.JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=black" alt="next.js" />
-    <img src="https://img.shields.io/badge/-Vapi-white?style=for-the-badge&color=5dfeca" alt="vapi" />
-    <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
-    <img src="https://img.shields.io/badge/-Firebase-black?style=for-the-badge&logoColor=white&logo=firebase&color=DD2C00" alt="firebase" />
-  </div>
+### 🌟 Built for practical outcomes, not demo-only workflows.
 
-  <h3 align="center">InterVue: A job interview preparation platform powered by Vapi AI Voice agents</h3>
+**[⬆ Back to top](#jobvue-ai)**
+
 </div>
-
-## 📋 <a name="table">Table of Contents</a>
-
-1. 🤖 [Introduction](#introduction)
-2. ⚙️ [Tech Stack](#tech-stack)
-3. 🔋 [Features](#features)
-4. 🕸️ [Snippets (Code to Copy)](#snippets)
-
-## <a name="introduction">🤖 Introduction</a>
-
-Built with Next.js for the user interface and backend logic, Firebase for authentication and data storage, styled with TailwindCSS and using Vapi's voice agents, InterVue is a website project designed to help you learn integrating AI models with your apps. The platform offers a sleek and modern experience for job interview preparation.
-
-## <a name="tech-stack">⚙️ Tech Stack</a>
-
-
-## <a name="features">🔋 Features</a>
-
-👉 **Authentication**: Sign Up and Sign In using password/email authentication handled by Firebase.
-
-👉 **Create Interviews**: Easily generate job interviews with help of Vapi voice assistants and Google Gemini.
-
-👉 **Get feedback from AI**: Take the interview with AI voice agent, and receive instant feedback based on your conversation.
-
-👉 **Modern UI/UX**: A sleek and user-friendly interface designed for a great experience.
-
-👉 **Interview Page**: Conduct AI-driven interviews with real-time feedback and detailed transcripts.
-
-👉 **Dashboard**: Manage and track all your interviews with easy navigation.
-
-👉 **Responsiveness**: Fully responsive design that works seamlessly across devices.
-
-and many more, including code architecture and reusability
-
-## <a name="snippets">🕸️ Snippets</a>
-
- </details>
-
-````
-
--->
-
-```css
-@import "tailwindcss";
-
-@plugin "tailwindcss-animate";
-
-@custom-variant dark (&:is(.dark *));
-
-@theme {
-  --color-success-100: #49de50;
-  --color-success-200: #42c748;
-  --color-destructive-100: #f75353;
-  --color-destructive-200: #c44141;
-
-  --color-primary-100: #dddfff;
-  --color-primary-200: #cac5fe;
-
-  --color-light-100: #d6e0ff;
-  --color-light-400: #6870a6;
-  --color-light-600: #4f557d;
-  --color-light-800: #24273a;
-
-  --color-dark-100: #020408;
-  --color-dark-200: #27282f;
-  --color-dark-300: #242633;
-
-  --font-mona-sans: "Mona Sans", sans-serif;
-
-  --bg-pattern: url("/pattern.png");
-}
-
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: var(--light-100);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  p {
-    @apply text-light-100;
-  }
-  h2 {
-    @apply text-3xl font-semibold;
-  }
-  h3 {
-    @apply text-2xl font-semibold;
-  }
-  ul {
-    @apply list-disc list-inside;
-  }
-  li {
-    @apply text-light-100;
-  }
-}
-
-@layer components {
-  .btn-call {
-    @apply inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-success-100 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-success-200 hover:bg-success-200 min-w-28 cursor-pointer items-center justify-center overflow-visible;
-
-    .span {
-      @apply bg-success-100 h-[85%] w-[65%];
-    }
-  }
-
-  .btn-disconnect {
-    @apply inline-block px-7 py-3 text-sm font-bold leading-5 text-white transition-colors duration-150 bg-destructive-100 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-destructive-200 hover:bg-destructive-200 min-w-28;
-  }
-
-  .btn-upload {
-    @apply flex min-h-14 w-full items-center justify-center gap-1.5 rounded-md;
-  }
-  .btn-primary {
-    @apply w-fit !bg-primary-200 !text-dark-100 hover:!bg-primary-200/80 !rounded-full !font-bold px-5 cursor-pointer min-h-10;
-  }
-  .btn-secondary {
-    @apply w-fit !bg-dark-200 !text-primary-200 hover:!bg-dark-200/80 !rounded-full !font-bold px-5 cursor-pointer min-h-10;
-  }
-
-  .btn-upload {
-    @apply bg-dark-200 rounded-full min-h-12 px-5 cursor-pointer border border-input  overflow-hidden;
-  }
-
-  .card-border {
-    @apply border-gradient p-0.5 rounded-2xl w-fit;
-  }
-
-  .card {
-    @apply dark-gradient rounded-2xl min-h-full;
-  }
-
-  .form {
-    @apply w-full;
-
-    .label {
-      @apply !text-light-100 !font-normal;
-    }
-
-    .input {
-      @apply !bg-dark-200 !rounded-full !min-h-12 !px-5 placeholder:!text-light-100;
-    }
-
-    .btn {
-      @apply !w-full !bg-primary-200 !text-dark-100 hover:!bg-primary-200/80 !rounded-full !min-h-10 !font-bold !px-5 cursor-pointer;
-    }
-  }
-
-  .call-view {
-    @apply flex sm:flex-row flex-col gap-10 items-center justify-between w-full;
-
-    h3 {
-      @apply text-center text-blue-600 mt-5;
-    }
-
-    .card-interviewer {
-      @apply flex-center flex-col gap-2 p-7 h-[400px] blue-gradient-dark rounded-lg border-2 border-primary-200/50 flex-1 sm:basis-1/2 w-full;
-    }
-
-    .avatar {
-      @apply z-10 flex items-center justify-center blue-gradient rounded-full size-[120px] relative;
-
-      .animate-speak {
-        @apply absolute inline-flex size-5/6 animate-ping rounded-full bg-primary-200 opacity-75;
-      }
-    }
-
-    .card-border {
-      @apply border-gradient p-0.5 rounded-2xl flex-1 sm:basis-1/2 w-full h-[400px] max-md:hidden;
-    }
-
-    .card-content {
-      @apply flex flex-col gap-2 justify-center items-center p-7 dark-gradient rounded-2xl min-h-full;
-    }
-  }
-
-  .transcript-border {
-    @apply border-gradient p-0.5 rounded-2xl w-full;
-
-    .transcript {
-      @apply dark-gradient rounded-2xl  min-h-12 px-5 py-3 flex items-center justify-center;
-
-      p {
-        @apply text-lg text-center text-white;
-      }
-    }
-  }
-
-  .section-feedback {
-    @apply flex flex-col gap-8 max-w-5xl mx-auto max-sm:px-4 text-lg leading-7;
-
-    .buttons {
-      @apply flex w-full justify-evenly gap-4 max-sm:flex-col max-sm:items-center;
-    }
-  }
-
-  .auth-layout {
-    @apply flex items-center justify-center mx-auto max-w-7xl min-h-screen max-sm:px-4 max-sm:py-8;
-  }
-
-  .root-layout {
-    @apply flex mx-auto max-w-7xl flex-col gap-12 my-12 px-16 max-sm:px-4 max-sm:my-8;
-  }
-
-  .card-cta {
-    @apply flex flex-row blue-gradient-dark rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4;
-  }
-
-  .interviews-section {
-    @apply flex flex-wrap gap-4 max-lg:flex-col w-full items-stretch;
-  }
-
-  .interview-text {
-    @apply text-lg text-center text-white;
-  }
-
-  .progress {
-    @apply h-1.5 text-[5px] font-bold bg-primary-200 rounded-full flex-center;
-  }
-
-  .tech-tooltip {
-    @apply absolute bottom-full mb-1 hidden group-hover:flex px-2 py-1 text-xs text-white bg-gray-700 rounded-md shadow-md;
-  }
-
-  .card-interview {
-    @apply dark-gradient rounded-2xl min-h-full flex flex-col p-6 relative overflow-hidden gap-10 justify-between;
-
-    .badge-text {
-      @apply text-sm font-semibold capitalize;
-    }
-  }
-}
-
-@utility dark-gradient {
-  @apply bg-gradient-to-b from-[#1A1C20] to-[#08090D];
-}
-
-@utility border-gradient {
-  @apply bg-gradient-to-b from-[#4B4D4F] to-[#4B4D4F33];
-}
-
-@utility pattern {
-  @apply bg-[url('/pattern.png')] bg-top bg-no-repeat;
-}
-
-@utility blue-gradient-dark {
-  @apply bg-gradient-to-b from-[#171532] to-[#08090D];
-}
-
-@utility blue-gradient {
-  @apply bg-gradient-to-l from-[#FFFFFF] to-[#CAC5FE];
-}
-
-@utility flex-center {
-  @apply flex items-center justify-center;
-}
-
-@utility animate-fadeIn {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><code>lib/utils.ts</code></summary>
-
-```javascript
-import { interviewCovers, mappings } from "@/constants";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
-const techIconBaseURL = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons";
-
-const normalizeTechName = (tech: string) => {
-  const key = tech.toLowerCase().replace(/\.js$/, "").replace(/\s+/g, "");
-  return mappings[key as keyof typeof mappings];
-};
-
-const checkIconExists = async (url: string) => {
-  try {
-    const response = await fetch(url, { method: "HEAD" });
-    return response.ok; // Returns true if the icon exists
-  } catch {
-    return false;
-  }
-};
-
-export const getTechLogos = async (techArray: string[]) => {
-  const logoURLs = techArray.map((tech) => {
-    const normalized = normalizeTechName(tech);
-    return {
-      tech,
-      url: `${techIconBaseURL}/${normalized}/${normalized}-original.svg`,
-    };
-  });
-
-  const results = await Promise.all(
-    logoURLs.map(async ({ tech, url }) => ({
-      tech,
-      url: (await checkIconExists(url)) ? url : "/tech.svg",
-    }))
-  );
-
-  return results;
-};
-
-export const getRandomInterviewCover = () => {
-  const randomIndex = Math.floor(Math.random() * interviewCovers.length);
-  return `/covers${interviewCovers[randomIndex]}`;
-};
-
-```
-
-</details>
-
-<details>
-<summary><code>Generate questions prompt (/app/api/vapi/generate/route.tsx):</code></summary>
-
-```javascript
-`Prepare questions for a job interview.
-        The job role is ${role}.
-        The job experience level is ${level}.
-        The tech stack used in the job is: ${techstack}.
-        The focus between behavioural and technical questions should lean towards: ${type}.
-        The amount of questions required is: ${amount}.
-        Please return only the questions, without any additional text.
-        The questions are going to be read by a voice assistant so do not use "/" or "*" or any other special characters which might break the voice assistant.
-        Return the questions formatted like this:
-        ["Question 1", "Question 2", "Question 3"]
-        
-        Thank you! <3
-    `;
-```
-
-</details>
-
-<details>
-<summary><code>Generate feedback prompt (lib/actions/general.action.ts):</code></summary>
-
-```javascript
-prompt: `
-        You are an AI interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories. Be thorough and detailed in your analysis. Don't be lenient with the candidate. If there are mistakes or areas for improvement, point them out.
-        Transcript:
-        ${formattedTranscript}
-
-        Please score the candidate from 0 to 100 in the following areas. Do not add categories other than the ones provided:
-        - **Communication Skills**: Clarity, articulation, structured responses.
-        - **Technical Knowledge**: Understanding of key concepts for the role.
-        - **Problem-Solving**: Ability to analyze problems and propose solutions.
-        - **Cultural & Role Fit**: Alignment with company values and job role.
-        - **Confidence & Clarity**: Confidence in responses, engagement, and clarity.
-        `,
-system:
-        "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
-```
-
-</details>
-
-<details>
-<summary><code>Display feedback (app/(root)/interview/[id]/feedback/page.tsx):</code></summary>
-
-```javascript
-<section className="section-feedback">
-  <div className="flex flex-row justify-center">
-    <h1 className="text-4xl font-semibold">
-      Feedback on the Interview -{" "}
-      <span className="capitalize">{interview.role}</span> Interview
-    </h1>
-  </div>
-
-  <div className="flex flex-row justify-center">
-    <div className="flex flex-row gap-5">
-      <div className="flex flex-row gap-2 items-center">
-        <Image src="/star.svg" width={22} height={22} alt="star" />
-        <p>
-          Overall Impression:{" "}
-          <span className="text-primary-200 font-bold">
-            {feedback?.totalScore}
-          </span>
-          /100
-        </p>
-      </div>
-
-      <div className="flex flex-row gap-2">
-        <Image src="/calendar.svg" width={22} height={22} alt="calendar" />
-        <p>
-          {feedback?.createdAt
-            ? dayjs(feedback.createdAt).format("MMM D, YYYY h:mm A")
-            : "N/A"}
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <hr />
-
-  <p>{feedback?.finalAssessment}</p>
-
-  <div className="flex flex-col gap-4">
-    <h2>Breakdown of the Interview:</h2>
-    {feedback?.categoryScores?.map((category, index) => (
-      <div key={index}>
-        <p className="font-bold">
-          {index + 1}. {category.name} ({category.score}/100)
-        </p>
-        <p>{category.comment}</p>
-      </div>
-    ))}
-  </div>
-
-  <div className="flex flex-col gap-3">
-    <h3>Strengths</h3>
-    <ul>
-      {feedback?.strengths?.map((strength, index) => (
-        <li key={index}>{strength}</li>
-      ))}
-    </ul>
-  </div>
-
-  <div className="flex flex-col gap-3">
-    <h3>Areas for Improvement</h3>
-    <ul>
-      {feedback?.areasForImprovement?.map((area, index) => (
-        <li key={index}>{area}</li>
-      ))}
-    </ul>
-  </div>
-
-  <div className="buttons">
-    <Button className="btn-secondary flex-1">
-      <Link href="/" className="flex w-full justify-center">
-        <p className="text-sm font-semibold text-primary-200 text-center">
-          Back to dashboard
-        </p>
-      </Link>
-    </Button>
-
-    <Button className="btn-primary flex-1">
-      <Link href={`/interview/${id}`} className="flex w-full justify-center">
-        <p className="text-sm font-semibold text-black text-center">
-          Retake Interview
-        </p>
-      </Link>
-    </Button>
-  </div>
-</section>
-```
-
-</details>

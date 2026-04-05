@@ -47,12 +47,12 @@ const Agent = ({
 
     const onMessage = (message: Message) => {
       console.log("VAPI message received:", message);
-      
+
       if (message.type === "transcript" && message.transcriptType === "final") {
         const newMessage = { role: message.role, content: message.transcript };
         setMessages((prev) => [...prev, newMessage]);
       }
-      
+
       // Handle other message types that might indicate workflow completion
       if (message.type === "function-call" || message.type === "tool-calls") {
         console.log("Function/tool call detected:", message);
@@ -113,45 +113,65 @@ const Agent = ({
     };
   }, []);
 
+  // Update last message
   useEffect(() => {
     if (messages.length > 0) {
       setLastMessage(messages[messages.length - 1].content);
     }
+  }, [messages]);
 
-    const handleGenerateFeedback = async (messages: SavedMessage[]) => {
-      console.log("handleGenerateFeedback");
+  // Handle interview completion and feedback generation
+  useEffect(() => {
+    // Only proceed if call has finished
+    if (callStatus !== CallStatus.FINISHED) return;
 
-      const { success, feedbackId: id } = await createFeedback({
-        interviewId: interviewId!,
-        userId: userId!,
-        transcript: messages,
-        feedbackId,
-      });
+    const handleCallCompletion = async () => {
+      try {
+        if (type === "generate") {
+          // Interview generation mode - redirect to home
+          console.log("Interview generation completed, redirecting to home...");
+          if (messages.length > 0) {
+            router.push("/");
+          }
+        } else {
+          // Interview mode - generate feedback and redirect
+          console.log("Interview completed. Generating feedback...");
 
-      if (success && id) {
-        router.push(`/interview/${interviewId}/feedback`);
-      } else {
-        console.log("Error saving feedback");
-        router.push("/");
+          if (messages.length === 0) {
+            console.warn(
+              "No messages recorded. Redirecting to interview home..."
+            );
+            router.push("/interview");
+            return;
+          }
+
+          const { success, feedbackId: newFeedbackId } = await createFeedback({
+            interviewId: interviewId!,
+            userId: userId!,
+            transcript: messages,
+            feedbackId,
+          });
+
+          if (success && newFeedbackId) {
+            console.log(
+              "Feedback generated successfully. Redirecting to feedback page..."
+            );
+            router.push(`/interview/${interviewId}/feedback`);
+          } else {
+            console.error("Failed to generate feedback");
+            // Fallback to interview details page
+            router.push(`/interview/${interviewId}`);
+          }
+        }
+      } catch (error) {
+        console.error("Error during call completion:", error);
+        // Fallback redirect on error
+        router.push(`/interview/${interviewId}`);
       }
     };
 
-    if (callStatus === CallStatus.FINISHED) {
-      if (type === "generate") {
-        console.log("Interview generation completed, redirecting to home...");
-        // Check if the interview was actually created before redirecting
-        if (messages.length > 0) {
-          // There were messages, so the workflow ran
-          router.push("/");
-        } else {
-          // No messages, might be an error - stay on the page
-          console.log("No messages received, staying on page");
-        }
-      } else {
-        handleGenerateFeedback(messages);
-      }
-    }
-  }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
+    handleCallCompletion();
+  }, [callStatus, type, messages, interviewId, userId, feedbackId, router]);
 
   const handleCall = async () => {
     try {
@@ -166,7 +186,7 @@ const Agent = ({
         console.log("Starting VAPI workflow for interview generation");
         console.log("Workflow ID:", process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID);
         console.log("Variables:", { username: userName, userid: userId });
-        
+
         await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
           variableValues: {
             username: userName,

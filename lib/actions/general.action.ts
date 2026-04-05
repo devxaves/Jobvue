@@ -6,6 +6,66 @@ import { google } from "@ai-sdk/google";
 import { prisma } from "@/lib/prisma";
 import { feedbackSchema } from "@/constants";
 
+// Helper function to get or create a badge
+async function getOrCreateBadge(
+  badgeName: string,
+  imageUrl: string = "/badges/default.png"
+) {
+  try {
+    let badge = await prisma.badge.findUnique({
+      where: { name: badgeName },
+    });
+
+    if (!badge) {
+      badge = await prisma.badge.create({
+        data: {
+          name: badgeName,
+          imageUrl,
+          description: getBadgeDescription(badgeName),
+        },
+      });
+    }
+
+    return badge.id;
+  } catch (error) {
+    console.error(`Error getting or creating badge ${badgeName}:`, error);
+    return null;
+  }
+}
+
+// Helper function to get badge descriptions
+function getBadgeDescription(badgeName: string): string {
+  const descriptions: { [key: string]: string } = {
+    "First Interview": "Completed your first mock interview",
+    "10 Tokens": "Earned 10 tokens",
+    "50 Tokens": "Earned 50 tokens",
+    "7-Day Streak": "7-day practice streak",
+  };
+  return descriptions[badgeName] || badgeName;
+}
+
+// Helper function to safely award badge
+async function awardBadge(userId: string, badgeName: string) {
+  try {
+    const badgeId = await getOrCreateBadge(badgeName);
+
+    if (!badgeId) {
+      console.warn(`Could not create badge ${badgeName}`);
+      return;
+    }
+
+    await prisma.userBadge.upsert({
+      where: { userId_badgeId: { userId, badgeId } },
+      update: {},
+      create: { userId, badgeId },
+    });
+
+    console.log(`✅ Badge awarded: ${badgeName}`);
+  } catch (error) {
+    console.error(`Error awarding badge ${badgeName}:`, error);
+  }
+}
+
 export async function createFeedback(params: CreateFeedbackParams) {
   const { interviewId, userId, transcript, feedbackId } = params;
 
@@ -18,7 +78,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
       .join("");
 
     const { object } = await generateObject({
-      model: google("gemini-2.0-flash-001", {
+      model: google("gemini-2.5-flash-lite", {
         structuredOutputs: false,
       }),
       schema: feedbackSchema,
@@ -27,12 +87,12 @@ export async function createFeedback(params: CreateFeedbackParams) {
         Transcript:
         ${formattedTranscript}
 
-        Please score the candidate from 0 to 100 in the following areas. Do not add categories other than the ones provided:
+        Please score the candidate from 0 to 100 in the following areas. Do not add categories other than the ones provided. Use EXACT category names:
         - **Communication Skills**: Clarity, articulation, structured responses.
         - **Technical Knowledge**: Understanding of key concepts for the role.
-        - **Problem-Solving**: Ability to analyze problems and propose solutions.
-        - **Cultural & Role Fit**: Alignment with company values and job role.
-        - **Confidence & Clarity**: Confidence in responses, engagement, and clarity.
+        - **Problem Solving**: Ability to analyze problems and propose solutions.
+        - **Cultural Fit**: Alignment with company values and job role.
+        - **Confidence and Clarity**: Confidence in responses, engagement, and clarity.
         `,
       system:
         "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
@@ -63,44 +123,38 @@ export async function createFeedback(params: CreateFeedbackParams) {
       });
     }
 
-    // BADGE LOGIC
-    // 1. First Interview + 10 tokens
-    const interviewCount = await prisma.interview.count({ where: { userId } });
-    const tokenObj = await prisma.token.findUnique({ where: { userId } });
-    const tokens = tokenObj?.amount ?? 0;
-    // Award first interview badge if this is the first interview and tokens >= 10
-    if (interviewCount === 1 && tokens >= 10) {
-      await prisma.userBadge.upsert({
-        where: { userId_badgeId: { userId, badgeId: "badge_first_interview" } },
-        update: {},
-        create: { userId, badgeId: "badge_first_interview" },
+    // BADGE LOGIC - Award badges safely
+    try {
+      const interviewCount = await prisma.interview.count({
+        where: { userId },
       });
-    }
-    // 2. 10 tokens badge
-    if (tokens >= 10) {
-      await prisma.userBadge.upsert({
-        where: { userId_badgeId: { userId, badgeId: "badge_10_tokens" } },
-        update: {},
-        create: { userId, badgeId: "badge_10_tokens" },
-      });
-    }
-    // 3. 50 tokens badge
-    if (tokens >= 50) {
-      await prisma.userBadge.upsert({
-        where: { userId_badgeId: { userId, badgeId: "badge_50_tokens" } },
-        update: {},
-        create: { userId, badgeId: "badge_50_tokens" },
-      });
-    }
-    // 4. 7-day streak badge
-    const streakObj = await prisma.streak.findUnique({ where: { userId } });
-    const streak = streakObj?.count ?? 0;
-    if (streak >= 7) {
-      await prisma.userBadge.upsert({
-        where: { userId_badgeId: { userId, badgeId: "badge_7_day_streak" } },
-        update: {},
-        create: { userId, badgeId: "badge_7_day_streak" },
-      });
+      const tokenObj = await prisma.token.findUnique({ where: { userId } });
+      const tokens = tokenObj?.amount ?? 0;
+
+      // 1. First Interview badge
+      if (interviewCount === 1 && tokens >= 10) {
+        await awardBadge(userId, "First Interview");
+      }
+
+      // 2. 10 tokens badge
+      if (tokens >= 10) {
+        await awardBadge(userId, "10 Tokens");
+      }
+
+      // 3. 50 tokens badge
+      if (tokens >= 50) {
+        await awardBadge(userId, "50 Tokens");
+      }
+
+      // 4. 7-day streak badge
+      const streakObj = await prisma.streak.findUnique({ where: { userId } });
+      const streak = streakObj?.count ?? 0;
+      if (streak >= 7) {
+        await awardBadge(userId, "7-Day Streak");
+      }
+    } catch (badgeError) {
+      console.error("Error awarding badges:", badgeError);
+      // Don't fail the entire feedback creation if badges fail - they're secondary
     }
 
     return { success: true, feedbackId: feedback.id };
